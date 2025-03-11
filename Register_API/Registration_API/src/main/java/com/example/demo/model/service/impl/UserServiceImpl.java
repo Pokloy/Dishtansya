@@ -6,14 +6,18 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.dao.UserRepository;
 import com.example.demo.model.dao.entity.UserEntity;
 import com.example.demo.model.service.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UserServiceImpl extends UserService {
 	@Autowired
 	private UserRepository userRepo;
 	
+	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	
     @Override
     public UserEntity createUser(UserEntity user) {
+    	user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
     
