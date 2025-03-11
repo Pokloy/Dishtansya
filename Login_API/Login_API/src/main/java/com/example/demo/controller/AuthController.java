@@ -25,11 +25,4 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody JwtRequest request) {
         return authService.authenticate(request);
     }
-
-    
-    @GetMapping("/test")
-    public String login() {
-        
-        return "TEst";
-    }
 }

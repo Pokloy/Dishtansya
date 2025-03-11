@@ -13,11 +13,15 @@ public class UserServiceImpl extends UserService {
 	@Autowired
 	private UserRepository userRepo;
 	
+	@Autowired
+	private EmailService emailServ;
+	
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
     @Override
     public UserEntity createUser(UserEntity user) {
     	user.setPassword(passwordEncoder.encode(user.getPassword()));
+    	emailServ.sendRegistrationEmail(user.getEmail());
         return userRepo.save(user);
     }
     

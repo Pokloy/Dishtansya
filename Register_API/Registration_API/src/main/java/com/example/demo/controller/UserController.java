@@ -30,7 +30,8 @@ public class UserController {
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(user.getEmail());
         
-  	  if(user.getEmail() == "" || user.getPassword() == "") {
+  	  if(user.getEmail() == "" || 
+  			  user.getPassword() == "") {
   		  response.put("message", "Please fill out completely");
 		  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 	  }
@@ -51,9 +52,4 @@ public class UserController {
 
     }
     
-    
-    @GetMapping("/test-user-service")
-    public String test() {
-    	return "Test Test ";
-    }
 }

@@ -9,18 +9,20 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>Registration_API</artifactId>
+	<artifactId>Order_API</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Registration_API</name>
-	<description>API for User Registration</description>
-
-
+	<name>Order_API</name>
+	<description>Order API for Dishtansya</description>
+	
+	
+	
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.5</spring-cloud.version>
 	</properties>
 	
-	    <dependencyManagement>
+	
+	<dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -32,15 +34,35 @@
         </dependencies>
     </dependencyManagement>
 	
-    <dependencies>
-		
+	
+	<dependencies>
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-mail</artifactId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
+		<!-- JSON Web Token (JWT) for authentication -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt-api</artifactId>
+		    <version>0.11.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt-impl</artifactId>
+		    <version>0.11.5</version>
+		    <scope>runtime</scope>
+		</dependency>
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt-jackson</artifactId>
+		    <version>0.11.5</version>
+		    <scope>runtime</scope>
 		</dependency>
 
-		
-        <!-- Eureka Client -->
+
+
+   <!-- Eureka Client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -114,8 +136,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-    </dependencies>
-
+			
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

@@ -18,10 +18,10 @@ import java.util.Base64;
 @Component
 public class JwtUtil {
 //    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    
+
 	   private static final String SECRET = "AlierGwapoSuperGwapoSecretKey61SecreyKet73377"; // Your fixed secret key
 	   private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
-
+	
     // Convert Key to Base64 Encoded String (use this if you want to store it in `application.properties`)
     public static String getEncodedSecretKey() {
         return Base64.getEncoder().encodeToString(SECRET_KEY.getEncoded());
