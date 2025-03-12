@@ -42,7 +42,7 @@ public class AuthServiceImplTest {
     }
 
     @Test
-    public void testAuthenticate_SuccessfulLogin() {
+    public void testAuthenticate1() {
         // Arrange
         JwtRequest mockJwtRequest = new JwtRequest();
         mockJwtRequest.setEmail("testEmail@gmail.com");
@@ -71,7 +71,7 @@ public class AuthServiceImplTest {
     }
 
     @Test
-    public void testAuthenticate_InvalidPassword_IncrementsFailedAttempts() {
+    public void testAuthenticate2() {
         // Arrange
         JwtRequest mockJwtRequest = new JwtRequest();
         mockJwtRequest.setEmail("testEmail@gmail.com");
@@ -99,7 +99,7 @@ public class AuthServiceImplTest {
     }
 
     @Test
-    public void testAuthenticate_AccountLockout() {
+    public void testAuthenticate3() {
         // Arrange
         JwtRequest mockJwtRequest = new JwtRequest();
         mockJwtRequest.setEmail("testEmail@gmail.com");
@@ -117,13 +117,13 @@ public class AuthServiceImplTest {
         ResponseEntity<?> response = authServiceImpl.authenticate(mockJwtRequest);
 
         // Assert
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertEquals(HttpStatus.LOCKED, response.getStatusCode());
         assertTrue(response.getBody() instanceof Map);
         assertEquals("Account is locked. Try again later.", ((Map<?, ?>) response.getBody()).get("message"));
     }
 
     @Test
-    public void testAuthenticate_UnknownUser() {
+    public void testAuthenticate4() {
         // Arrange
         JwtRequest mockJwtRequest = new JwtRequest();
         mockJwtRequest.setEmail("unknown@gmail.com");
@@ -138,5 +138,33 @@ public class AuthServiceImplTest {
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         assertTrue(response.getBody() instanceof Map);
         assertEquals("Invalid credentials", ((Map<?, ?>) response.getBody()).get("message"));
+    }
+    
+    @Test
+    public void testAuthenticate5() {
+        // Arrange
+        JwtRequest mockJwtRequest = new JwtRequest();
+        mockJwtRequest.setEmail("testEmail@gmail.com");
+        mockJwtRequest.setPassword("WrongPass");
+
+        UserEntity mockUser = new UserEntity();
+        mockUser.setEmail("testEmail@gmail.com");
+        mockUser.setPassword("encodedPassword");
+        mockUser.setFailedAttempts(5);
+        mockUser.setLockoutTime(null);
+
+        when(userRepository.findUserByEmail("testEmail@gmail.com")).thenReturn(mockUser);
+        when(passwordEncoder.matches("WrongPass", "encodedPassword")).thenReturn(false);
+
+        // Act
+        ResponseEntity<?> response = authServiceImpl.authenticate(mockJwtRequest);
+
+        // Assert
+        assertEquals(HttpStatus.LOCKED, response.getStatusCode());
+        assertTrue(response.getBody() instanceof Map);
+        assertEquals("Too many failed attempts. Account locked for 5 minutes.", ((Map<?, ?>) response.getBody()).get("message"));
+
+        // Verify failed attempts incremented
+        assertEquals(6, mockUser.getFailedAttempts());
     }
 }

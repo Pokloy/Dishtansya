@@ -71,6 +71,6 @@ public class AuthServiceImpl extends AuthService {
 
         String accessToken = jwtUtil.generateToken(user.getEmail());
         response.put("access_token", accessToken);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
