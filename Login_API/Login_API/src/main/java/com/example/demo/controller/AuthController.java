@@ -15,12 +15,22 @@ import com.example.demo.controller.dto.JwtRequest;
 import com.example.demo.controller.dto.JwtResponse;
 import com.example.demo.model.service.AuthService;
 
+/** 
+ * Controller for login authentication
+ * @since 12/02/2025
+ * @author alier
+ * */
 @RestController
 public class AuthController {
 
     @Autowired
     private AuthService authService;
-
+    
+    /** 
+     * method for login authentication
+     * @since 12/02/2025
+     * @author alier
+     * */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody JwtRequest request) {
         return authService.authenticate(request);

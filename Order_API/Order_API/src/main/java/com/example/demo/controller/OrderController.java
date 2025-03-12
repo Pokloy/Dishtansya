@@ -16,11 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.dao.entity.ProductEntity;
 import com.example.demo.model.service.OrderService;
 
+/** 
+ * Controller for order service
+ * @since 12/02/2025
+ * @author alier
+ * */
 @RestController
 public class OrderController {
 	@Autowired
 	OrderService orderserve;
 	
+	/** 
+	 * controller method for creating a new product 
+	 * @since 12/02/2025
+	 * @author alier
+	 * */
 	@PostMapping("/product")
 	public ResponseEntity<Map<String, String>> createProduct(@RequestBody ProductEntity prod){
 		Map <String, String> response = new HashMap<>();
@@ -41,6 +51,11 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	}
 	
+	/** 
+	 * controller method for ordering a product 
+	 * @since 12/02/2025
+	 * @author alier
+	 * */
 	@PostMapping("/order")
 	public ResponseEntity<Map<String, String>> orderProduct(@RequestBody ProductEntity prod){
 		Map <String, String> response = new HashMap<>();

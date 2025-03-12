@@ -8,6 +8,11 @@ import com.example.demo.model.dao.entity.UserEntity;
 import com.example.demo.model.service.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * service for create and find user
+ * @since 12/02/2025
+ * @author alier
+ * */
 @Service
 public class UserServiceImpl extends UserService {
 	@Autowired
@@ -18,6 +23,11 @@ public class UserServiceImpl extends UserService {
 	
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
+	/**
+	 * method for create new user
+	 * @since 12/02/2025
+	 * @author alier
+	 * */
     @Override
     public UserEntity createUser(UserEntity user) {
     	user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -25,6 +35,11 @@ public class UserServiceImpl extends UserService {
         return userRepo.save(user);
     }
     
+	/**
+	 * method for finding user by email
+	 * @since 12/02/2025
+	 * @author alier
+	 * */
     @Override
     public UserEntity findUserByEmail(UserEntity user) {
     	return userRepo.findUserByEmail(user.getEmail());

@@ -16,11 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.dao.entity.UserEntity;
 import com.example.demo.model.service.UserService;
 
+/**
+ * controller for user service
+ * @since 12/02/2025
+ * @author alier
+ * */
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
     
+    /**
+     * method for registering a new user 
+     * @since 12/02/2025
+     * @author alier
+     * */
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> createUser(@RequestBody UserEntity user) {
     	Map <String, String> response = new HashMap<>();
@@ -29,18 +39,21 @@ public class UserController {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(user.getEmail());
-        
+      
+        // verify if the email and password is blank
   	  if(user.getEmail() == "" || 
   			  user.getPassword() == "") {
   		  response.put("message", "Please fill out completely");
 		  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 	  }
   	  
+  	  // verify if email is in correct format
       if (!matcher.matches()) {
     	  response.put("message", "Invalid Email Format");
     	  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
       }
       
+      // verify if the email already exist
       if(checkAccount != null) {
     	  response.put("message", "Email already taken");
     	  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

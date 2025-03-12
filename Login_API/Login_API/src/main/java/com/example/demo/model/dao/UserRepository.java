@@ -9,7 +9,11 @@ import com.example.demo.model.dao.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	final String FIND_USER_BY_EMAIL = " SELECT e FROM UserEntity e WHERE e.email = :email ";
 	
-	
+	/** 
+	 * query for finding user by email 
+     * @since 12/02/2025
+     * @author alier
+	 * */
 	@Query(value=FIND_USER_BY_EMAIL)
 	public UserEntity findUserByEmail(String email) throws DataAccessException;
 }

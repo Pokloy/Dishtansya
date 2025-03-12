@@ -17,6 +17,11 @@ import com.example.demo.model.dao.entity.UserEntity;
 import com.example.demo.model.service.AuthService;
 import com.example.demo.utility.JwtUtil;
 
+/** 
+ * Service for login Authentication
+ * @since 12/02/2025
+ * @author alier
+ * */
 @Service
 public class AuthServiceImpl extends AuthService {
 
@@ -31,12 +36,18 @@ public class AuthServiceImpl extends AuthService {
     
     private static final int MAX_ATTEMPTS = 5;
     private static final int LOCKOUT_DURATION_MINUTES = 5;
-
+    
+    /** 
+	 * method for authenticating user
+	 * @since 12/02/2025
+	 * @author alier
+	 * */
     @Transactional
     public ResponseEntity<?> authenticate(JwtRequest request) {
         UserEntity user = userRepository.findUserByEmail(request.getEmail());
         Map<String, String> response = new HashMap<>();
-
+        
+        // Check if the user result of find email is null
         if (user == null) {
             response.put("message", "Invalid credentials");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
@@ -51,7 +62,7 @@ public class AuthServiceImpl extends AuthService {
         // Verify password
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             user.setFailedAttempts(user.getFailedAttempts() + 1);
-            
+            // Verify failed attemts
             if (user.getFailedAttempts() >= MAX_ATTEMPTS) {
                 user.setLockoutTime(LocalDateTime.now().plusMinutes(LOCKOUT_DURATION_MINUTES));
                 response.put("message", "Too many failed attempts. Account locked for 5 minutes.");

@@ -8,11 +8,21 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.service.EmailService;
 
+/**
+ * service for email sending notification
+ * @since 12/02/2025
+ * @author alier
+ * */
 @Service
 public class EmailServiceImpl extends EmailService {
     @Autowired
     private JavaMailSender mailSender;
 	
+	/**
+	 * method for email sending notification
+	 * @since 12/02/2025
+	 * @author alier
+	 * */
     @Async
     public void sendRegistrationEmail(String to) {
     	 SimpleMailMessage message = new SimpleMailMessage();
