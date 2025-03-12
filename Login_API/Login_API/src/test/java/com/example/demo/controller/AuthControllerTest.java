@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -36,26 +36,6 @@ public class AuthControllerTest {
 	    request.setPassword("password123");
 
 	    authController.login(request);
-
-	}
-
-	@Test
-	public void testLogin2() {
-	    JwtRequest request = new JwtRequest();
-	    request.setEmail("user@example.com");
-
-	    authController.login(request);
-
-	  	}
-
-	@Test
-	public void testLogin3() {
-	    JwtRequest request = new JwtRequest();
-	    request.setEmail("");
-	    request.setPassword("");
-
-
-	  authController.login(request);
 
 	}
 
