@@ -1,8 +1,8 @@
 Before Starting the program. 
 Please follow on the instruction of Run_Configuration files. 
-
 Have the port numbers to be set accordingly to there respective ports on application.properties
-Also paste this query on postgres
+
+Also paste this query on postgres.
 "CREATE TABLE dishtansya_db"
 To create database for the API
 
